@@ -10,14 +10,34 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
-      <ul class="list-group mb-4" >
+      <div class="list-group" >
         {% for item in Items %}
-        <li>{{ item.title }} - {{item.status}}</li>
+        
+          {%if item.status == "Done" %}
+          <a class ="list-group-item list-group-item-success">
+          <h4 class = "list-group-item-heading">To do item No.{{item.id}} - {{ item.title }}</h4>
+          {%elif item.status == "Not Started" %}
+          <a class ="list-group-item list-group-item-warning">
+            <h4 class = "list-group-item-heading">To do item No.{{item.id}} - {{ item.title }}</h4>
+          {%endif%}
+        </a>
         {% endfor %}
-      </ul>
-      <form action = "http://localhost:5000/add" method ="post">
+      </div>
+      <br>
+      <form action = "http://localhost:5000/add" method ="post" class="form-inline">
         <p>Enter to-do list title</p>
+        <br>
         <p><input type ="text" name = "toadd" /></p>
+        <p><input type="submit" name="submit"/></p>
+      </form>
+      <form action = "http://localhost:5000/complete" method ="post" class="form-inline">
+        <label>Enter to-do id to complete</label>
+        <select name="tocomplete" class="form-control">
+        {% for uc in uncompleted %}
+        <option>{{uc.id}}</option>
+        {% endfor %}
+        </select>
+        <br>
         <p><input type="submit" name="submit"/></p>
       </form>
     </div>

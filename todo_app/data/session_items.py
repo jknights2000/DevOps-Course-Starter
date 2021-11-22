@@ -67,3 +67,15 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+def complete(id):
+    updateitem = get_item(id)
+    updateitem["status"] = "Done"
+    save_item(updateitem)
+
+def status(item):
+    return item["status"]
+
+def uncompleted(item):
+    if item["status"] == "Not Started":
+        return True
+    return False
