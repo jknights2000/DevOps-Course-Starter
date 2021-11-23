@@ -11,7 +11,7 @@ while currentline <= len(file) - 1:
     line = file[int(currentline)]
     output = line.replace('\n','')
     split = output.split(" ")
-    print(split)
+    print(currentline)
     if len(split) == 2:
         if int(split[1]) in numbers:
             break
@@ -19,10 +19,15 @@ while currentline <= len(file) - 1:
             currentline = int(split[1]) - 1
             numbers.append(int(split[1]))
     else:
+        
+        leave = False
         newdict = {"op":split[2],"n1":split[3],"n2":split[3]}
-        if newdict in calcs:
-                break
-            
+        for dict in calcs:
+            if dict["op"] == newdict["op"] and dict["n2"] == newdict["n2"] and dict["n1"] == newdict["n1"]:
+                leave = True
+        if leave:
+            break
+
         if split[2] == "+":
             currentline = add(int(split[3]),int(split[4])) - 1
         elif split[2] == "-":
