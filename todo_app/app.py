@@ -12,7 +12,7 @@ def index():
     list_items = sorted(get_items(),key = status)
     list_completed = get_items()
     deletelist = get_items()
-    new_list = filter(uncompleted,list_completed)
+    new_list = list(filter(uncompleted,list_completed))
 
     return render_template('index.html',Items = list_items,uncompleted = new_list,deletelist = deletelist)
 @app.route('/add',methods = ['POST'])
