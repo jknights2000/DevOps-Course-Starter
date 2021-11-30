@@ -79,3 +79,11 @@ def uncompleted(item):
     if item["status"] == "Not Started":
         return True
     return False
+def delete(id):
+    removeitem = get_item(id)
+    items = get_items()
+    newitems = []
+    for x in items:
+        if x["id"] != removeitem["id"]:
+            newitems.append(x)
+    
