@@ -23,7 +23,7 @@ def done():
     id = request.form['tocomplete']
     complete(id)
     return redirect(url_for('index'))
-@app.route('/complete',methods = ['POST'])
+@app.route('/delete',methods = ['POST'])
 def delete():
     id = request.form['todelete']
     delete(id)
