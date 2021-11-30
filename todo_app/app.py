@@ -24,7 +24,7 @@ def done():
     complete(id)
     return redirect(url_for('index'))
 @app.route('/complete',methods = ['POST'])
-def done():
+def delete():
     id = request.form['todelete']
     delete(id)
     return redirect(url_for('index'))
