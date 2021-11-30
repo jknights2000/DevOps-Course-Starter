@@ -44,7 +44,9 @@ def add_item(title):
 
     # Determine the ID for the item based on that of the previously added item
     id = items[-1]['id'] + 1 if items else 0
-
+    if id == 0:
+        id = 1
+    
     item = { 'id': id, 'title': title, 'status': 'Not Started' }
 
     # Add the item to the list
@@ -67,6 +69,7 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+
 def complete(id):
     updateitem = get_item(id)
     updateitem["status"] = "Done"
@@ -79,7 +82,9 @@ def uncompleted(item):
     if item["status"] == "Not Started":
         return True
     return False
-def delete(id):
+
+
+def todeleteitem(id):
     removeitem = get_item(id)
     items = get_items()
     newitems = []
