@@ -86,4 +86,4 @@ def delete(id):
     for x in items:
         if x["id"] != removeitem["id"]:
             newitems.append(x)
-    
+    session["items"] = newitems
