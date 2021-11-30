@@ -40,6 +40,16 @@
         <br>
         <p><input type="submit" name="submit"/></p>
       </form>
+      <form action = "http://localhost:5000/delete" method ="post" class="form-inline">
+        <p>Enter to-do id you want to delete</p>
+        <select name="todelete" class="form-control">
+          {% for item in Items %}
+          <option>{{item.id}}</option>
+          {% endfor %}
+          </select>
+          <br>
+        <p><input type="submit" name="submit"/></p>
+      </form>
     </div>
   </div>
 {% endblock %}

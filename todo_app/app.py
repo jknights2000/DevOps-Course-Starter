@@ -1,7 +1,7 @@
 from flask import Flask, redirect,url_for,request
 from flask import render_template
 from todo_app.flask_config import Config
-from todo_app.data.session_items import get_items,add_item,complete,status,uncompleted
+from todo_app.data.session_items import get_items,add_item,complete,status,uncompleted,delete
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -22,4 +22,9 @@ def add():
 def done():
     id = request.form['tocomplete']
     complete(id)
+    return redirect(url_for('index'))
+@app.route('/complete',methods = ['POST'])
+def done():
+    id = request.form['todelete']
+    delete(id)
     return redirect(url_for('index'))
