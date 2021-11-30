@@ -72,23 +72,23 @@ def save_item(item):
 
 def complete(id):
     updateitem = get_item(id)
-    updateitem["status"] = "Done"
+    updateitem["status"] = "Done"#changes status to done when complete
     save_item(updateitem)
 
 def status(item):
-    return item["status"]
+    return item["status"]#gets status
 
 def uncompleted(item):
     if item["status"] == "Not Started":
         return True
-    return False
+    return False#returns boolean based on status
 
 
 def todeleteitem(id):
-    removeitem = get_item(id)
-    items = get_items()
-    newitems = []
+    removeitem = get_item(id)#gets item to remove
+    items = get_items()#gets a copy of items
+    newitems = []#makes new list
     for x in items:
         if x["id"] != removeitem["id"]:
-            newitems.append(x)
-    session["items"] = newitems
+            newitems.append(x)#adds all but the one to remove
+    session["items"] = newitems#sets it as the seesion items
