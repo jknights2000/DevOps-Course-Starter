@@ -15,10 +15,12 @@
         
           {%if item.status == "Done" %}
           <a class ="list-group-item list-group-item-success">
-          <h4 class = "list-group-item-heading">To do item ID.{{item.id}} - {{ item.title }} - {{item.cardid}}</h4>
+          <h4 class = "list-group-item-heading">To do item ID.{{item.id}} - {{ item.name }}</h4>
+          <p>{{item.desc}}</p>
           {%elif item.status == "TODO" %}
           <a class ="list-group-item list-group-item-warning">
-            <h4 class = "list-group-item-heading">To do item ID.{{item.id}} - {{ item.title }} - {{item.cardid}}</h4>
+            <h4 class = "list-group-item-heading">To do item ID.{{item.id}} - {{ item.name }}</h4>
+            <p>{{item.desc}}</p>
           {%endif%}
         </a>
         {% endfor %}

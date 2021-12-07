@@ -17,12 +17,12 @@ def get_items():
         res2 = requests.get('https://api.trello.com/1/lists/'+listid+'?key='+ key +'&token='+token)
         reponse2 = res2.json()
 
-        status = reponse2['name']
-        id = item['idShort']
-        name = item['name']
-        cardid = item['id']
-        listid = item['idList']
-        items.append({ 'id': id, 'status': status, 'title': name ,'cardid':cardid,'listid':listid})
+        # status = reponse2['name']
+        # id = item['idShort']
+        # name = item['name']
+        # cardid = item['id']
+        # listid = item['idList']
+        items.append(Item.from_trello(item,reponse2))
     return session.get('items',items)
 
 def get_item(id):
@@ -68,10 +68,10 @@ def complete(id):
     response = requests.request("PUT", reqUrl, data=payload,  headers=headersList)
 
 def status(item):
-    return item["status"]
+    return item.status
 
 def uncompleted(item):
-    if item["status"] == "TODO":
+    if item.status == "TODO":
         return True
     return False
 def todeleteitem(id):
@@ -90,3 +90,14 @@ def todeleteitem(id):
 
     response = requests.request("DELETE", reqUrl, data=payload,  headers=headersList)
 
+class Item:
+    def __init__(self, id, name, card_id, listid,desc, status = 'To Do'):
+        self.id = id
+        self.name = name
+        self.status = status 
+        self.cardid = card_id
+        self.listid = listid
+        self.desc = desc
+    @classmethod
+    def from_trello(cls,card,list):
+        return cls(card['idShort'],card['name'],card['id'],card['idList'],card['desc'],list['name'])
