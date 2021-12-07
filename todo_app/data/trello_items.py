@@ -21,7 +21,8 @@ def get_items():
         id = item['idShort']
         name = item['name']
         cardid = item['id']
-        items.append({ 'id': id, 'status': status, 'title': name ,'cardid':cardid})
+        listid = item['idList']
+        items.append({ 'id': id, 'status': status, 'title': name ,'cardid':cardid,'listid':listid})
     return session.get('items',items)
 
 def get_item(id):
@@ -41,7 +42,6 @@ def add_item(title):
     return card_id
 
 def save_item(item):
-    boardid = os.getenv('TRELLO_BOARDID')
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
 
@@ -50,17 +50,22 @@ def save_item(item):
     response = requests.request("PUT", url, params=querystring)
 
 def complete(id):
-    boardid = os.getenv('TRELLO_BOARDID')
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
     done = os.getenv('TRELLO_DONEID')
 
     updateitem = get_item(id)
-    updateitemcardid = updateitem['cardid']
+    
+    reqUrl = f"https://api.trello.com/1/cards/{updateitem['cardid']}?idList={done}&key={key}&token={token}"
 
-    reqUrl = "https://api.trello.com/1/cards/"+updateitemcardid+"?idList="+done+"&key"+key+"&token"+token
-    response = requests.request("PUT", reqUrl)
-    return
+    headersList = {
+    "Accept": "*/*",
+    "User-Agent": "Thunder Client (https://www.thunderclient.io)" 
+    }
+
+    payload = ""
+
+    response = requests.request("PUT", reqUrl, data=payload,  headers=headersList)
 
 def status(item):
     return item["status"]
@@ -69,3 +74,19 @@ def uncompleted(item):
     if item["status"] == "TODO":
         return True
     return False
+def todeleteitem(id):
+    token = os.getenv('TRELLO_TOKEN')
+    key = os.getenv('TRELLO_KEY')
+    updateitem = get_item(id)
+    id = updateitem['cardid']
+    reqUrl = f"https://api.trello.com/1/cards/{updateitem['cardid']}?key={key}&token={token}"
+
+    headersList = {
+    "Accept": "*/*",
+        "User-Agent": "Thunder Client (https://www.thunderclient.io)" 
+    }
+
+    payload = ""
+
+    response = requests.request("DELETE", reqUrl, data=payload,  headers=headersList)
+
