@@ -43,3 +43,31 @@ def add_item(title):
     response = requests.request("POST", url, params=querystring)
     card_id = response.json()["id"]
     return card_id
+
+def save_item(item):
+    boardid = os.getenv('TRELLO_BOARDID')
+    token = os.getenv('TRELLO_TOKEN')
+    key = os.getenv('TRELLO_KEY')
+
+    url = f"https://api.trello.com/1/cards"
+    querystring = {"cardid":item['cardid'], "key": key, "token": token}
+    response = requests.request("PUT", url, params=querystring)
+
+def complete(id):
+    boardid = os.getenv('TRELLO_BOARDID')
+    token = os.getenv('TRELLO_TOKEN')
+    key = os.getenv('TRELLO_KEY')
+    done = os.getenv('TRELLO_DONEID')
+    updateitem = get_item(id)
+    updateitemcardid = updateitem['cardid']
+    url = f"https://api.trello.com/1/cards/"+ updateitemcardid
+    querystring = {"listid":done, "key": key, "token": token}
+    response = requests.request("PUT", url, params=querystring)
+
+def status(item):
+    return item["status"]
+
+def uncompleted(item):
+    if item["status"] == "TODO":
+        return True
+    return False
