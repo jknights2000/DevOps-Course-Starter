@@ -27,7 +27,7 @@ def get_items():
 
 def get_item(id):
     items = get_items()
-    return next((item for item in items if item['id'] == int(id)), None)
+    return next((item for item in items if item.id == int(id)), None)
 
 def add_item(title):
     boardid = os.getenv('TRELLO_BOARDID')
@@ -56,7 +56,7 @@ def complete(id):
 
     updateitem = get_item(id)
     
-    reqUrl = f"https://api.trello.com/1/cards/{updateitem['cardid']}?idList={done}&key={key}&token={token}"
+    reqUrl = f"https://api.trello.com/1/cards/{updateitem.cardid}?idList={done}&key={key}&token={token}"
 
     headersList = {
     "Accept": "*/*",
@@ -78,8 +78,8 @@ def todeleteitem(id):
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
     updateitem = get_item(id)
-    id = updateitem['cardid']
-    reqUrl = f"https://api.trello.com/1/cards/{updateitem['cardid']}?key={key}&token={token}"
+    id = updateitem.cardid
+    reqUrl = f"https://api.trello.com/1/cards/{id}?key={key}&token={token}"
 
     headersList = {
     "Accept": "*/*",
