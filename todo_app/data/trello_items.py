@@ -13,8 +13,10 @@ def get_items():
 
     for item in reponse1:
         listid = item['idList']
+
         res2 = requests.get('https://api.trello.com/1/lists/'+listid+'?key='+ key +'&token='+token)
         reponse2 = res2.json()
+
         status = reponse2['name']
         id = item['idShort']
         name = item['name']
@@ -30,16 +32,10 @@ def add_item(title):
     boardid = os.getenv('TRELLO_BOARDID')
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
-    
-    res1 = requests.get('https://api.trello.com/1/boards/'+boardid+'/lists?key='+ key +'&token='+token)
-    reponse1 = res1.json()
-
-    for item in reponse1:
-        if item['name'] == "TODO":
-            listid = item['id']
+    TODO = os.getenv('TRELLO_TODOID')
     
     url = f"https://api.trello.com/1/cards"
-    querystring = {"name": title, "idList": listid, "key": key, "token": token}
+    querystring = {"name": title, "idList": TODO, "key": key, "token": token}
     response = requests.request("POST", url, params=querystring)
     card_id = response.json()["id"]
     return card_id
@@ -58,11 +54,13 @@ def complete(id):
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
     done = os.getenv('TRELLO_DONEID')
+
     updateitem = get_item(id)
     updateitemcardid = updateitem['cardid']
-    url = f"https://api.trello.com/1/cards/"+ updateitemcardid
-    querystring = {"listid":done, "key": key, "token": token}
-    response = requests.request("PUT", url, params=querystring)
+
+    reqUrl = "https://api.trello.com/1/cards/"+updateitemcardid+"?idList="+done+"&key"+key+"&token"+token
+    response = requests.request("PUT", reqUrl)
+    return
 
 def status(item):
     return item["status"]
