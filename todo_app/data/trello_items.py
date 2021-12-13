@@ -1,5 +1,6 @@
 import requests
 import os
+import datetime
 from flask import session
 def get_items():
     boardid = os.getenv('TRELLO_BOARDID')
@@ -29,14 +30,17 @@ def get_item(id):
     items = get_items()
     return next((item for item in items if item.id == int(id)), None)
 
-def add_item(title,desc):
+def add_item(title,desc,date):
     boardid = os.getenv('TRELLO_BOARDID')
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
     TODO = os.getenv('TRELLO_TODOID')
     
     url = f"https://api.trello.com/1/cards"
-    querystring = {"name": title,"desc":desc, "idList": TODO, "key": key, "token": token}
+    if date is None:
+        querystring = {"name": title,"desc":desc, "idList": TODO, "key": key, "token": token}
+    else:
+        querystring = {"name": title,"desc":desc,"due":date, "idList": TODO, "key": key, "token": token}
     response = requests.request("POST", url, params=querystring)
     card_id = response.json()["id"]
     return card_id
@@ -91,13 +95,18 @@ def todeleteitem(id):
     response = requests.request("DELETE", reqUrl, data=payload,  headers=headersList)
 
 class Item:
-    def __init__(self, id, name, card_id, listid,desc, status = 'To Do'):
+    def __init__(self, id, name, card_id, listid,desc,due, status = 'To Do'):
         self.id = id
         self.name = name
         self.status = status 
         self.cardid = card_id
         self.listid = listid
         self.desc = desc
+        if due is None:
+            self.due = due
+        else:
+            duedate = datetime.datetime.strptime(due,'%Y-%m-%dT%H:%M:%S.%fz')
+            self.due = duedate.strftime('due %b %d, %Y')
     @classmethod
     def from_trello(cls,card,list):
-        return cls(card['idShort'],card['name'],card['id'],card['idList'],card['desc'],list['name'])
+        return cls(card['idShort'],card['name'],card['id'],card['idList'],card['desc'],card['due'],list['name'])

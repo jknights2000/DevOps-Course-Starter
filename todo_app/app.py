@@ -20,7 +20,8 @@ def index():
 def add():
     title = request.form.get('toaddname')
     desc = request.form.get('toadddesc',' ')
-    add_item(title,desc)
+    date = request.form.get('toadddate',None)
+    add_item(title,desc,date)
     return redirect(url_for('index'))
 @app.route('/complete',methods = ['POST'])
 def done():
