@@ -18,11 +18,7 @@ def get_items():
         res2 = requests.get('https://api.trello.com/1/lists/'+listid+'?key='+ key +'&token='+token)
         reponse2 = res2.json()
 
-        # status = reponse2['name']
-        # id = item['idShort']
-        # name = item['name']
-        # cardid = item['id']
-        # listid = item['idList']
+      
         items.append(Item.from_trello(item,reponse2))
     return session.get('items',items)
 
@@ -31,16 +27,19 @@ def get_item(id):
     return next((item for item in items if item.id == int(id)), None)
 
 def add_item(title,desc,date):
-    boardid = os.getenv('TRELLO_BOARDID')
+    
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
     TODO = os.getenv('TRELLO_TODOID')
     
     url = f"https://api.trello.com/1/cards"
+    
     if date is None:
         querystring = {"name": title,"desc":desc, "idList": TODO, "key": key, "token": token}
     else:
         querystring = {"name": title,"desc":desc,"due":date, "idList": TODO, "key": key, "token": token}
+
+
     response = requests.request("POST", url, params=querystring)
     card_id = response.json()["id"]
     return card_id
@@ -51,7 +50,7 @@ def save_item(item):
 
     url = f"https://api.trello.com/1/cards"
     querystring = {"cardid":item['cardid'], "key": key, "token": token}
-    response = requests.request("PUT", url, params=querystring)
+    requests.request("PUT", url, params=querystring)
 
 def complete(id):
     token = os.getenv('TRELLO_TOKEN')
@@ -69,7 +68,7 @@ def complete(id):
 
     payload = ""
 
-    response = requests.request("PUT", reqUrl, data=payload,  headers=headersList)
+    requests.request("PUT", reqUrl, data=payload,  headers=headersList)
 
 def status(item):
     return item.status
@@ -78,6 +77,7 @@ def uncompleted(item):
     if item.status == "TODO":
         return True
     return False
+
 def todeleteitem(id):
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
@@ -92,7 +92,7 @@ def todeleteitem(id):
 
     payload = ""
 
-    response = requests.request("DELETE", reqUrl, data=payload,  headers=headersList)
+    requests.request("DELETE", reqUrl, data=payload,  headers=headersList)
 
 class Item:
     def __init__(self, id, name, card_id, listid,desc,due, status = 'To Do'):
@@ -102,6 +102,7 @@ class Item:
         self.cardid = card_id
         self.listid = listid
         self.desc = desc
+        
         if due is None:
             self.due = due
         else:
