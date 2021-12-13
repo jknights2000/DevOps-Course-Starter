@@ -29,14 +29,14 @@ def get_item(id):
     items = get_items()
     return next((item for item in items if item.id == int(id)), None)
 
-def add_item(title):
+def add_item(title,desc):
     boardid = os.getenv('TRELLO_BOARDID')
     token = os.getenv('TRELLO_TOKEN')
     key = os.getenv('TRELLO_KEY')
     TODO = os.getenv('TRELLO_TODOID')
     
     url = f"https://api.trello.com/1/cards"
-    querystring = {"name": title, "idList": TODO, "key": key, "token": token}
+    querystring = {"name": title,"desc":desc, "idList": TODO, "key": key, "token": token}
     response = requests.request("POST", url, params=querystring)
     card_id = response.json()["id"]
     return card_id

@@ -18,8 +18,9 @@ def index():
     return render_template('index.html',Items = list_items,uncompleted = new_list,deletelist = deletelist)
 @app.route('/add',methods = ['POST'])
 def add():
-    title = request.form['toadd']
-    add_item(title)
+    title = request.form.get('toaddname')
+    desc = request.form.get('toadddesc',' ')
+    add_item(title,desc)
     return redirect(url_for('index'))
 @app.route('/complete',methods = ['POST'])
 def done():
