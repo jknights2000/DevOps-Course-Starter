@@ -50,3 +50,15 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Trello Key and Token
+
+to run you need to get a trello key and token. this can be done by signing into trello then getting them from https://trello.com/app-key. you will also need to get the board id of the board you will be using, as well as the list id for youe to do list and done list.
+
+these should be stored in the .env file like so
+
+TRELLO_KEY={your key}
+TRELLO_TOKEN={yourtoken}
+TRELLO_BOARDID={YourBoardId}
+TRELLO_TODOID={To Do list id}
+TRELLO_DONEID={Done list id}

@@ -15,10 +15,18 @@
         
           {%if item.status == "Done" %}
           <a class ="list-group-item list-group-item-success">
-          <h4 class = "list-group-item-heading">To do item ID.{{item.id}} - {{ item.title }}</h4>
-          {%elif item.status == "Not Started" %}
+          <h4 class = "list-group-item-heading">To do item ID.{{item.id}} - {{ item.name }} <strong>Done!</strong></h4>
+          <p>{{item.desc}}</p>
+            {%if item.due != None%}
+            <p>{{item.due}}</p>
+            {%endif%}
+          {%elif item.status == "TODO" %}
           <a class ="list-group-item list-group-item-warning">
-            <h4 class = "list-group-item-heading">To do item ID.{{item.id}} - {{ item.title }}</h4>
+            <h4 class = "list-group-item-heading">To do item ID.{{item.id}} - {{ item.name }} <strong>To Do!</strong></h4>
+            <p>{{item.desc}}</p>
+            {%if item.due != None%}
+            <p>{{item.due}}</p>
+            {%endif%}
           {%endif%}
         </a>
         {% endfor %}
@@ -27,13 +35,14 @@
       <label>Enter to-do list title</label>
       <form action = "http://localhost:5000/add" method ="post" class="form-inline">
         <div class="input-group">
-        <p><input type ="text" name = "toadd" class="form-control" placeholder="To-Do Title"/></p>
-        <p><input type="submit" name="submit"/></p>
+        <p><input type ="text" name = "toaddname" class="form-control" placeholder="To-Do Title" required/></p>
+        <p><input type ="text" name = "toadddesc" class="form-control" placeholder="To-Do Desc"/></p>
+        <p><input type ="date" name = "toadddate" class="form-control"></p>
+        <p><input type="submit" name="submit" class="form-control"/></p>
         </div>
       </form>
-
-      <label>Enter to-do id to complete</label>
       {%if uncompleted|length != 0 %}
+      <label>Enter to-do id to complete</label>
       <form action = "http://localhost:5000/complete" method ="post" class="form-inline">
         <select name="tocomplete" class="form-control">
         {% for uc in uncompleted %}
@@ -43,15 +52,11 @@
         <br>
         <p><input type="submit" name="submit"/></p>
       </form>
-      {%else%}
-      <br>
-      <label>nothing to complete</label>
       {%endif%}
 
       <br>
-      
-      <label>Enter to-do id you want to delete</label>
       {%if deletelist|length != 0 %}
+      <label>Enter to-do id you want to delete</label>
       <form action = "http://localhost:5000/delete" method ="post" class="form-inline">
           
           <select name="todelete" class="form-control">
@@ -63,9 +68,6 @@
           <br>
         <p><input type="submit" name="submit"/></p>
       </form>
-      {%else%}
-      <br>
-      <label>nothing to delete</label>
       {%endif%}
     </div>
   </div>
