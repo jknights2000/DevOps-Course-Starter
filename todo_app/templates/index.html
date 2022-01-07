@@ -41,11 +41,11 @@
         <p><input type="submit" name="submit" class="form-control"/></p>
         </div>
       </form>
-      {%if view_model.uncompleted|length != 0 %}
+      {%if uncompleted|length != 0 %}
       <label>Enter to-do id to complete</label>
       <form action = "http://localhost:5000/complete" method ="post" class="form-inline">
         <select name="tocomplete" class="form-control">
-        {% for uc in view_model.uncompleted %}
+        {% for uc in uncompleted %}
         <option>{{uc.id}}</option>
         {% endfor %}
         </select>
@@ -55,13 +55,13 @@
       {%endif%}
 
       <br>
-      {%if view_model.deletelist|length != 0 %}
+      {%if deletelist|length != 0 %}
       <label>Enter to-do id you want to delete</label>
       <form action = "http://localhost:5000/delete" method ="post" class="form-inline">
           
           <select name="todelete" class="form-control">
           
-          {% for delete in view_model.deletelist %}
+          {% for delete in deletelist %}
           <option>{{delete.id}}</option>
           {% endfor %}
           </select>

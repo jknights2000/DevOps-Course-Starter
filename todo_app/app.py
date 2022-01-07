@@ -2,7 +2,7 @@ from flask import Flask, redirect,url_for,request
 from flask import render_template
 from todo_app.flask_config import Config
 from todo_app.data.trello_items import get_items,add_item,complete,status,uncompleted,todeleteitem
-
+from todo_app.data.ViewModel import ViewModel
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -35,17 +35,4 @@ def todelete():
     newid = request.form['todelete']
     todeleteitem(newid)
     return redirect(url_for('index'))
-class ViewModel:
-    def __init__(self, items,uncompleted,deletelist):
-        self._items = items
-        self._uncompleted = uncompleted
-        self._deletelist = deletelist
-    @property
-    def items(self):
-        return self._items
-    @property
-    def uncompleted(self):
-        return self._uncompleted 
-    @property
-    def deletelist(self):
-        return self._deletelist 
+
