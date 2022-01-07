@@ -11,7 +11,7 @@
     <div class="col-md-12">
       <h2>Items</h2>
       <div class="list-group" >
-        {% for item in Items %}
+        {% for item in view_model.items %}
         
           {%if item.status == "Done" %}
           <a class ="list-group-item list-group-item-success">
@@ -41,11 +41,11 @@
         <p><input type="submit" name="submit" class="form-control"/></p>
         </div>
       </form>
-      {%if uncompleted|length != 0 %}
+      {%if view_model.uncompleted|length != 0 %}
       <label>Enter to-do id to complete</label>
       <form action = "http://localhost:5000/complete" method ="post" class="form-inline">
         <select name="tocomplete" class="form-control">
-        {% for uc in uncompleted %}
+        {% for uc in view_model.uncompleted %}
         <option>{{uc.id}}</option>
         {% endfor %}
         </select>
@@ -55,13 +55,13 @@
       {%endif%}
 
       <br>
-      {%if deletelist|length != 0 %}
+      {%if view_model.deletelist|length != 0 %}
       <label>Enter to-do id you want to delete</label>
       <form action = "http://localhost:5000/delete" method ="post" class="form-inline">
           
           <select name="todelete" class="form-control">
           
-          {% for delete in deletelist %}
+          {% for delete in view_model.deletelist %}
           <option>{{delete.id}}</option>
           {% endfor %}
           </select>

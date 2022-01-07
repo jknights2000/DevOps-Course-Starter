@@ -14,8 +14,8 @@ def index():
     list_completed = get_items()
     deletelist = get_items()
     new_list = list(filter(uncompleted,list_completed))
-
-    return render_template('index.html',Items = list_items,uncompleted = new_list,deletelist = deletelist)
+    view_model = ViewModel(list_items,new_list,deletelist)
+    return render_template('index.html',view_model = view_model)
 @app.route('/add',methods = ['POST'])
 def add():
     title = request.form.get('toaddname')
@@ -35,3 +35,17 @@ def todelete():
     newid = request.form['todelete']
     todeleteitem(newid)
     return redirect(url_for('index'))
+class ViewModel:
+    def __init__(self, items,uncompleted,deletelist):
+        self._items = items
+        self._uncompleted = uncompleted
+        self._deletelist = deletelist
+    @property
+    def items(self):
+        return self._items
+    @property
+    def uncompleted(self):
+        return self._uncompleted 
+    @property
+    def deletelist(self):
+        return self._deletelist 
