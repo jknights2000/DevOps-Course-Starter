@@ -3,6 +3,8 @@ from dotenv import load_dotenv, find_dotenv
 import requests
 import os
 from todo_app import app
+from todo_app.data.trello_items import get_items,add_item,complete,status,uncompleted,todeleteitem
+
 @pytest.fixture
 def client():
  # Use our test integration config instead of the 'real' version
