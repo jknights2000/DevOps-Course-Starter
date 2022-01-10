@@ -20,7 +20,6 @@ def test_index_page(monkeypatch, client):
  response = client.get('/')
  assert response.status_code == 200
  
-
     
 class StubResponse():
     def __init__(self, fake_response_data):
@@ -28,7 +27,6 @@ class StubResponse():
         self.status_code = 200
     def json(self):
         return self.fake_response_data
-
 def get_lists_stub(url, params):
         test_board_id = os.environ.get('TRELLO_BOARD_ID')
         token = os.getenv('TRELLO_TOKEN')
