@@ -16,6 +16,7 @@ def create_app():
         new_list = list(filter(uncompleted,list_completed))
         view_model = ViewModel(list_items,new_list,deletelist)
         return render_template('index.html',view_model = view_model)
+        
     @app.route('/add',methods = ['POST'])
     def add():
         title = request.form.get('toaddname')

@@ -18,21 +18,34 @@ def test_index_page(monkeypatch, client):
  # Replace call to requests.get(url) with our own function
  monkeypatch.setattr(requests, 'get', get_lists_stub)
  response = client.get('/')
+ assert response.status_code == 200
+ 
 
+    
 class StubResponse():
- def __init__(self, fake_response_data):
-    self.fake_response_data = fake_response_data
-
-def json(self):
-    return self.fake_response_data
+    def __init__(self, fake_response_data):
+        self.fake_response_data = fake_response_data
+        self.status_code = 200
+    def json(self):
+        return self.fake_response_data
 
 def get_lists_stub(url, params):
-    test_board_id = os.environ.get('TRELLO_BOARD_ID')
-    fake_response_data = None
-    if url == f'https://api.trello.com/1/boards/{test_board_id}/lists':
-        fake_response_data = [{
-        'id': '123abc',
-        'name': 'To Do',
-        'cards': [{'id': '456', 'name': 'Test card'}]
-        }]
-    return StubResponse(fake_response_data)
+        test_board_id = os.environ.get('TRELLO_BOARD_ID')
+        token = os.getenv('TRELLO_TOKEN')
+        key = os.getenv('TRELLO_KEY')
+        
+        fake_response_data = None
+        if url == f'https://api.trello.com/1/boards/'+test_board_id+'/cards?key='+ key +'&token='+token:
+            fake_response_data = [{
+            "id": "abc123",
+            "desc": "",
+            "idList": "123abc",
+            "idShort": 21,
+            "name": "lego movie",
+            "due": "2021-12-29T00:00:00.000Z"
+            }]
+        if url == 'https://api.trello.com/1/lists/123abc?key='+ key +'&token='+token:
+            fake_response_data = [{
+                "name":"TODO"
+            }]
+        return StubResponse(fake_response_data)
