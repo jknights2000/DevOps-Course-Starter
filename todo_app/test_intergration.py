@@ -37,14 +37,14 @@ def get_lists_stub(url, params = None):
         
         fake_response_data = None
         if url == f'https://api.trello.com/1/boards/'+test_board_id+'/cards?key='+ key +'&token='+token:
-            fake_response_data = {
+            fake_response_data = [{
             "id": "abc123",
             "desc": "",
             "idList": "123abc",
             "idShort": 21,
             "name": "lego movie",
             "due": "2021-12-29T00:00:00.000Z"
-            }
+            }]
         if url == 'https://api.trello.com/1/lists/123abc?key='+ key +'&token='+token:
             fake_response_data = {
                 "name":"TODO"
