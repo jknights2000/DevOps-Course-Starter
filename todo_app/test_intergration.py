@@ -30,23 +30,23 @@ class StubResponse():
     def json(self):
         return self.fake_response_data
 
-def get_lists_stub(url, params):
-        test_board_id = os.environ.get('TRELLO_BOARD_ID')
+def get_lists_stub(url, params = None):
+        test_board_id = os.getenv('TRELLO_BOARDID')
         token = os.getenv('TRELLO_TOKEN')
         key = os.getenv('TRELLO_KEY')
         
         fake_response_data = None
         if url == f'https://api.trello.com/1/boards/'+test_board_id+'/cards?key='+ key +'&token='+token:
-            fake_response_data = [{
+            fake_response_data = {
             "id": "abc123",
             "desc": "",
             "idList": "123abc",
             "idShort": 21,
             "name": "lego movie",
             "due": "2021-12-29T00:00:00.000Z"
-            }]
+            }
         if url == 'https://api.trello.com/1/lists/123abc?key='+ key +'&token='+token:
-            fake_response_data = [{
+            fake_response_data = {
                 "name":"TODO"
-            }]
+            }
         return StubResponse(fake_response_data)
