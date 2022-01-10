@@ -27,6 +27,7 @@ class StubResponse():
         self.status_code = 200
     def json(self):
         return self.fake_response_data
+
 def get_lists_stub(url, params):
         test_board_id = os.environ.get('TRELLO_BOARD_ID')
         token = os.getenv('TRELLO_TOKEN')
