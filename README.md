@@ -62,3 +62,15 @@ TRELLO_TOKEN={yourtoken}
 TRELLO_BOARDID={YourBoardId}
 TRELLO_TODOID={To Do list id}
 TRELLO_DONEID={Done list id}
+
+## test running
+install pytest using following code 
+```
+pip install -U pytest
+```
+
+run this code in external terminal to run tests
+```
+ poetry run
+pytest path/to/test_file
+```
