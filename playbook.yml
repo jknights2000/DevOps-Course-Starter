@@ -61,8 +61,14 @@
       group: wheel
       mode: '0644'
 
+  - name: copy .service
+    ansible.builtin.copy:
+      src: ~/todoapp.service
+      dest: /etc/systemd/system/todoapp.service
+
   - name: Start todoapp
     ansible.builtin.systemd:
       state: started
       name: todoapp.service
+      daemon_reload: true
 
