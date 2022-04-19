@@ -7,9 +7,10 @@ RUN curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poet
 WORKDIR /todo
 
 COPY . /todo
-
+#copy dir
 ENV PATH="${PATH}:/root/.poetry/bin"
 
 RUN poetry install
-
+#install poetry
 ENTRYPOINT ["./todoapp"]
+#entry point
