@@ -17,5 +17,5 @@ FROM base as development
 ENTRYPOINT  poetry run flask run --host 0.0.0.0
 
 FROM base as production
-ENTRYPOINT 
+CMD ["gunicorn"  , "-b", "0.0.0.0:8000", "app:app"]
 #entry point
