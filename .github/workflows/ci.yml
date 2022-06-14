@@ -1,12 +1,12 @@
 name: Continuous Integration
-on: [push]
+on: [push,pull request]
 jobs:
  build:
     name: Build and test
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: build
       run: docker build --target test --tag my-test-image .
 
