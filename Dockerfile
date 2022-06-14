@@ -20,4 +20,7 @@ FROM base as production
 RUN poetry add gunicorn
 EXPOSE 80
 CMD ["gunicorn"  , "-b", "0.0.0.0:80", "todo_app.app:create_app()"]
+
+FROM base as test
+ENTRYPOINT [ "poetry","run","pytest" ]
 #entry point
