@@ -82,7 +82,7 @@ $ docker build --target production --tag todo-app:prod .
 ```
 and these commands to run it
 ```
-docker run --env-file ./.env -p 5100:80 --mount type=bind,source="$(pwd)"\todo_app,target=/app/todo_app todo-app:dev
+docker run --env-file ./.env -p 5100:80 --mount type=bind,source="$(pwd)"\todo_app,target=/todo_app/app.py todo-app:dev
 
-docker run --env-file ./.env -p 5100:80 --mount type=bind,source="$(pwd)"\todo_app,target=/app/todo_app todo-app:prod
+docker run --env-file ./.env -p 5100:80 --mount type=bind,source="$(pwd)"\todo_app,target=/todo_app/app.py todo-app:prod
 ```

@@ -14,8 +14,10 @@ RUN poetry install
 #EXPOSE 80
 #install poetry
 FROM base as development 
-ENTRYPOINT  poetry run flask run --host 0.0.0.0
+ENTRYPOINT  poetry run flask run --host 0.0.0.0:80
 
 FROM base as production
-CMD ["gunicorn"  , "-b", "0.0.0.0:8000", "app:app"]
+RUN poetry add gunicorn
+EXPOSE 80
+CMD ["gunicorn"  , "-b", "0.0.0.0:80", "todo_app.app:create_app()"]
 #entry point
