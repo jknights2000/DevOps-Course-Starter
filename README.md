@@ -74,3 +74,15 @@ run this code in external terminal to run tests
  poetry run
 pytest path/to/test_file
 ```
+## Docker
+To build both production and development run
+```
+$ docker build --target development --tag todo-app:dev .
+$ docker build --target production --tag todo-app:prod .
+```
+and these commands to run it
+```
+docker run --env-file ./.env -p 5100:80 --mount type=bind,source="$(pwd)"\todo_app,target=/todo_app/app.py todo-app:dev
+
+docker run --env-file ./.env -p 5100:80 --mount type=bind,source="$(pwd)"\todo_app,target=/todo_app/app.py todo-app:prod
+```
