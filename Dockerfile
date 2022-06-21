@@ -22,5 +22,5 @@ EXPOSE 80
 CMD ["gunicorn"  , "-b", "0.0.0.0:80", "todo_app.app:create_app()"]
 
 FROM base as test
-ENTRYPOINT [ "poetry","run","pytest" ]
+ENTRYPOINT [ "poetry","run","pytest" ]#should work
 #entry point
