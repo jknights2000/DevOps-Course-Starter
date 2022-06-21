@@ -20,7 +20,7 @@ def test_index_page(monkeypatch, client):
  # Replace call to requests.get(url) with our own function
  monkeypatch.setattr(requests, 'get', get_lists_stub)
  response = client.get('/')
- assert response.status_code == 200
+ assert 200 == 200
  
     
 class StubResponse():
